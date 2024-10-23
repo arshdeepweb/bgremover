@@ -9,6 +9,7 @@ import {
 import Home from './pages/Home/Home.jsx';
 import Result from './pages/Result/Result.jsx';
 import BuyCredit from './pages/BuyCredit/BuyCredit.jsx';
+import { ClerkProvider } from '@clerk/clerk-react'
 
 const router = createBrowserRouter([
   {
@@ -16,8 +17,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path:"",
-        element:<Home />
+        path: "",
+        element: <Home />
       },
       {
         path: "result",
@@ -32,8 +33,16 @@ const router = createBrowserRouter([
   }
 ])
 
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      <RouterProvider router={router} />
+    </ClerkProvider>
   </StrictMode>,
 )
