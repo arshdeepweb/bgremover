@@ -23,7 +23,7 @@ export const clerkWebhooks = async (req, res) =>{
           email:data.email.addresses[0].email,
           firstName:data.first_name,
           LastName:data.last_name,
-          photo:data.profile_image_url
+          photo:data.image_url
         }
 
         await USER.create(userData)
@@ -37,7 +37,7 @@ export const clerkWebhooks = async (req, res) =>{
           email:data.email.addresses[0].email,
           firstName:data.first_name,
           LastName:data.last_name,
-          photo:data.profile_image_url
+          photo:data.image_url
         }
 
         await USER.findOneAndUpdate({clerkId:data.id}, userData)
