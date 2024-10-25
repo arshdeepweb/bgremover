@@ -10,8 +10,6 @@ import Home from './pages/Home/Home.jsx';
 import Result from './pages/Result/Result.jsx';
 import BuyCredit from './pages/BuyCredit/BuyCredit.jsx';
 import { ClerkProvider } from '@clerk/clerk-react'
-import store from './store/store.js'
-import { Provider } from 'react-redux'
 
 const router = createBrowserRouter([
   {
@@ -44,9 +42,7 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-      <Provider store={store}>
         <RouterProvider router={router} />
-      </Provider>
     </ClerkProvider>
   </StrictMode>,
 )
