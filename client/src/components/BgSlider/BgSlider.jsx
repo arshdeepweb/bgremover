@@ -10,11 +10,11 @@ const BgSlider = () => {
   }
 
   return (
-    <div className='pb-10 md:py-20 mx-2'>
+    <div className='pb-10 md:py-20 mx-2 '>
       {/* TITLE */}
       <h1 className=' mb-12 sm:mb-20 text-4xl text-center xl:text-5xl 2xl:text-6xl font-bold text-neutral-700 leading-tight'>Remove Background With High <br /> Quality and Accuracy</h1>
 
-      <div className='relative w-full max-w-3xl overflow-hidden m-auto rounded-xl'>
+      <div className='relative w-full max-w-3xl overflow-hidden m-auto rounded-xl border-[#F8C794] border-2'>
         {/* Background Image */}
 
         <img src={assets.image_w_bg} style={{clipPath:`inset(0 ${100.2 - sliderPosition}% 0 0)`}} alt="" />

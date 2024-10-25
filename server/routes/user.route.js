@@ -5,6 +5,6 @@ import authUserMiddleware from '../middlewares/auth.middleware.js'
 const userRouter = express.Router()
 
 userRouter.post('/webhooks', clerkWebhooks)
-userRouter.post('/credit', authUserMiddleware, userAvailableCredits)
+userRouter.get('/credit', authUserMiddleware, userAvailableCredits)
 
 export default userRouter
