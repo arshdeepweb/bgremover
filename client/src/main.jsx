@@ -10,7 +10,7 @@ import Home from './pages/Home/Home.jsx';
 import Result from './pages/Result/Result.jsx';
 import BuyCredit from './pages/BuyCredit/BuyCredit.jsx';
 import { ClerkProvider } from '@clerk/clerk-react'
-import AppContextProvider from './context/appContext.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -43,9 +43,7 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-      <AppContextProvider>
         <RouterProvider router={router} />
-      </AppContextProvider>
     </ClerkProvider>
   </StrictMode >,
 )

@@ -3,6 +3,7 @@ import cors from 'cors'
 import 'dotenv/config'
 import connectDB from './config/db.js'
 import userRouter from './routes/user.route.js'
+import imageRouter from './routes/image.route.js'
 
 
 // App Config
@@ -19,6 +20,7 @@ app.use(cors())
 // API Routes
 
 app.use('/api/user', userRouter)
+app.use('/api/image', imageRouter)
 
 app.get('/' ,(req, res)=>{
   res.send("API Working")
