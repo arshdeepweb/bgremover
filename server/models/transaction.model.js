@@ -9,4 +9,5 @@ const tranasctionSchema = mongoose.Schema({
   date:{ type: Number },
 })
 
+
 export const TRANSACTION = mongoose.models.TRANSACTION || mongoose.model('transaction', tranasctionSchema)
