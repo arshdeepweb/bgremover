@@ -42,6 +42,7 @@ const Result = () => {
           </div>
         </div>
 
+        
         {/* ----------- Button ------------ */}
 
         <div className='flex justify-center sm:justify-end items-center flex-wrap gap-4 mt-6 '>
