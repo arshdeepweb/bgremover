@@ -4,51 +4,61 @@ import FormData from 'form-data'
 import { USER } from '../models/user.model.js'
 
 //COnstroller function to remove Background
-const removeBG = async (req, res) =>{
+const removeBG = async (req, res) => {
   try {
-    
-    const {clerkId} = req.body;
+    const { clerkId } = req.body;
     console.log(clerkId);
-    const user = await USER.findOne({clerkId})
 
-    if(!user){
-      return res.json({success:false, message:"Please Login"})
+    // Step 1: Find User
+    const user = await USER.findOne({ clerkId });
+    if (!user) {
+      return res.json({ success: false, message: "Please Login" });
     }
-    
-    if(user.creditBalance === 0){
-      return res.json({success:false, message:"No more Credits", creditBalance:user.creditBalance})
+    if (user.creditBalance === 0) {
+      return res.json({ success: false, message: "No more Credits", creditBalance: user.creditBalance });
     }
 
-    const imagePath = req.file.path;
+    // Step 2: Read Image File
+    const imagePath = req.file?.path;
+    if (!imagePath) {
+      return res.json({ success: false, message: "Image file not provided" });
+    }
+    const imageFile = fs.createReadStream(imagePath);
 
-    //Read File
+    // Step 3: Prepare Form Data
+    const formData = new FormData();
+    formData.append('image_file', imageFile);
 
-    const imageFile = fs.createReadStream(imagePath)
-
-    const formData = new FormData()
-
-    formData.append('image_file', imageFile)
-
-    const {data} = await axios.post('https://clipdrop-api.co/remove-background/v1', formData, {
-      headers:{
+    // Step 4: Send Request to Clipdrop API
+    const { data } = await axios.post('https://clipdrop-api.co/remove-background/v1', formData, {
+      headers: {
         'x-api-key': process.env.CLIPDROP_APIKEY,
-        responseType: 'arraybuffer'
-      }
-    })
+        ...formData.getHeaders(), // Necessary to include headers set by FormData
+      },
+      responseType: 'arraybuffer', // Place outside of `headers` object
+    });
 
-    const base64Image = Buffer.from(data, 'binary').toString('base64')
+    // Step 5: Convert Response to Base64
+    const base64Image = Buffer.from(data, 'binary').toString('base64');
+    const resultImage = `data:${req.file.mimetype};base64,${base64Image}`;
 
-    const resultImage = `data:${req.file.mimetype};base64,${base64Image}`
+    // Step 6: Update User's Credit Balance
+    await USER.findByIdAndUpdate(user._id, { creditBalance: user.creditBalance - 1 });
 
-    await USER.findByIdAndUpdate(user._id, {creditBalance : user.creditBalance-1})
+    // Step 7: Clean up temporary file (optional, if needed)
+    fs.unlink(imagePath, (err) => {
+      if (err) console.error("Error deleting temp file:", err);
+    });
 
-    res.json({success:true, resultImage, creditBalance: user.creditBalance-1, message:'Background Removed'})
-
+    // Step 8: Return Success Response
+    res.json({ success: true, resultImage, creditBalance: user.creditBalance - 1, message: 'Background Removed' });
+    
   } catch (error) {
-    console.log(error.message)
-    res.json({success:false, message:error.message})
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
   }
-}
+};
+
 
 
 export {removeBG}
