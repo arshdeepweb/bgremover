@@ -16,7 +16,9 @@ await connectDB()
 // Intialize middleware
 app.use(express.json())
 app.use(cors({
-  origin: "https://bgeraser.vercel.app",
+  origin: {
+    target:"https://bgeraser.vercel.app",
+  },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // If your frontend is sending cookies or authentication headers
   optionsSuccessStatus: 204 // For legacy browser support
