@@ -22,7 +22,7 @@ const AppContextProvider = (props) => {
     try {
       console.log("RUN");
       const token = await getToken()
-      const response = await axios.get("/api/user/credit",{headers:{token}})
+      const response = await axios.get(backendURL+"/api/user/credit",{headers:{token}})
       console.log(response)
       if(response.data.success){
         console.log(response.data)
@@ -57,7 +57,7 @@ const AppContextProvider = (props) => {
       const formData = new FormData()
       image && formData.append('image', image[0])
       console.log("req start");
-      const {data} = await axios.post('/api/image/remove-bg', formData, {headers:{token}})
+      const {data} = await axios.post(backendURL+'/api/image/remove-bg', formData, {headers:{token}})
       console.log("req complete");
       if(data.success){
         setResultImage(data.resultImage)

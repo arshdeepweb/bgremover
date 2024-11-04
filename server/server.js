@@ -17,8 +17,7 @@ await connectDB()
 app.use(express.json())
 app.use(cors({
   origin: "https://bgeraser.vercel.app",
-  credentials: true, // Enable cookies and credentials in cross-origin requests
-  optionsSuccessStatus: 204, // Status for successful OPTIONS requests
+  optionsSuccessStatus: 200
 }));
 
 // API Routes
@@ -26,10 +25,10 @@ app.use(cors({
 app.use('/api/user', userRouter)
 app.use('/api/image', imageRouter)
 
-app.get('/', (req, res) => {
+app.get('/' ,(req, res)=>{
   res.send("API Working")
 })
 
-app.listen(port, () => {
+app.listen(port,()=>{
   console.log(`The server is running on http://localhost:${port}`)
 })
