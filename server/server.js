@@ -17,8 +17,6 @@ await connectDB()
 app.use(express.json())
 app.use(cors({
   origin: "https://bgeraser.vercel.app",
-  methods: 'GET,POST,PUT,DELETE,OPTIONS', // Allowed HTTP methods
-  allowedHeaders: 'Content-Type,Authorization', // Allowed headers
   credentials: true, // Enable cookies and credentials in cross-origin requests
   optionsSuccessStatus: 204, // Status for successful OPTIONS requests
 }));
