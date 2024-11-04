@@ -9,6 +9,7 @@ export default defineConfig({
       '/api': {
         target: 'https://bgeraserapi.vercel.app',
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''), // Optional: rewrite path
       },
     }
   }
