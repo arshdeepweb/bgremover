@@ -15,7 +15,10 @@ await connectDB()
 
 // Intialize middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: "https://bgeraser.vercel.app",
+  optionsSuccessStatus: 200
+}));
 
 // API Routes
 
