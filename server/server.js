@@ -17,7 +17,9 @@ await connectDB()
 app.use(express.json())
 app.use(cors({
   origin: '*',
-  optionsSuccessStatus: 200
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // If your frontend is sending cookies or authentication headers
+  optionsSuccessStatus: 204 // For legacy browser support
 }));
 
 // API Routes
@@ -25,10 +27,10 @@ app.use(cors({
 app.use('/api/user', userRouter)
 app.use('/api/image', imageRouter)
 
-app.get('/' ,(req, res)=>{
+app.get('/', (req, res) => {
   res.send("API Working")
 })
 
-app.listen(port,()=>{
+app.listen(port, () => {
   console.log(`The server is running on http://localhost:${port}`)
 })
